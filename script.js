@@ -162,7 +162,7 @@
     f.phone.setAttribute('aria-invalid', String(!okP)); f.name.setAttribute('aria-invalid', String(!name));
     if (!okP) { f.phone.focus(); return; }
     if (!name) { f.name.focus(); return; }
-    var txt = plain(t('wa.form')).replace('{name}', name).replace('{phone}', phone).replace('{rooms}', f.rooms.value).replace('{pay}', plain(t(f.pay.value)));
+    var txt = plain(t('wa.form')).replace('{name}', name).replace('{phone}', phone).replace('{rooms}', f.rooms.value).replace('{pay}', plain(t(form.querySelector('input[name=pay]:checked').dataset.k)));
     $('.form-ok', form).hidden = false;
     window.open(waUrl(txt), '_blank', 'noopener');
   });
