@@ -69,8 +69,8 @@
   var APTS = [
     { id: '82', rooms: 2, name: 'apt.n82', area: '82', a: [82], plans: [] },
     { id: '101', rooms: 2, name: 'apt.n101', area: '101', a: [101], plans: [] },
-    { id: '3', rooms: 3, name: 'apt.n3', area: '145-149', a: [145, 149], plans: ['plan-1', 'plan-11'] },
-    { id: '4', rooms: 4, name: 'apt.n4', area: '175-179', a: [175, 179], plans: ['plan-2', 'plan-22'] }
+    { id: '3', rooms: 3, name: 'apt.n3', area: '145-149', a: [145, 149], plans: ['plan-11'] },
+    { id: '4', rooms: 4, name: 'apt.n4', area: '175-179', a: [175, 179], plans: ['plan-22'] }
   ];
   var RATE = { 1: 405000, 2: 415000 };
   var state = { rooms: 3, id: '3', pay: 1, plan: 0 };
@@ -120,7 +120,7 @@
         if (anim && window.gsap && !reduce) gsap.fromTo(elPlan, { opacity: 0, scale: .96 }, { opacity: 1, scale: 1, duration: .6, ease: 'power3.out' });
       }
       elPlan.alt = plain(t(a.name));
-      a.plans.forEach(function (p, i) {
+      if (a.plans.length > 1) a.plans.forEach(function (p, i) {
         var b = doc.createElement('button'); b.type = 'button'; b.textContent = String(i + 1);
         b.setAttribute('aria-pressed', String(i === state.plan));
         b.addEventListener('click', function () { state.plan = i; renderPicker(true); });
@@ -180,23 +180,21 @@
   /* ---------- мобильная сцена: высота по низу текста ---------- */
   var mqMob = window.matchMedia('(max-width: 820px)'), sceneEl = $('.scene');
   function fitScene() {
-    var st = $('.stage');
-    if (!sceneEl || !st) return;
-    if (!mqMob.matches) { st.style.removeProperty('--sch-h'); st.style.removeProperty('--sch-p'); return; }
+    var st = $('.hero-stage'), sp = $('.place-stage');
+    if (!sceneEl || !st || !sp) return;
+    if (!mqMob.matches) { st.style.removeProperty('--sch-h'); sp.style.removeProperty('--sch-p'); return; }
     var H = window.innerHeight, mb = $('.mbar') ? $('.mbar').offsetHeight : 0, hc = $('.hero-copy'), pc = $('.place-copy');
     var extra = 0;
     $$('.state-body p', pc).forEach(function (p) { extra = Math.max(extra, p.scrollHeight + 8); });
     var fit = function (top) { return Math.max(110, Math.min(H - mb - top, Math.round(H * .5))) + 'px'; };
     st.style.setProperty('--sch-h', fit(hc.offsetTop + hc.offsetHeight + 14));
-    st.style.setProperty('--sch-p', fit(pc.offsetTop + pc.offsetHeight + extra + 52));
+    sp.style.setProperty('--sch-p', fit(pc.offsetTop + pc.offsetHeight + extra + 52));
   }
   var lastW = window.innerWidth;
   window.addEventListener('resize', function () { if (window.innerWidth === lastW) return; lastW = window.innerWidth; fitScene(); });
   if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(fitScene);
   fitScene();
 
-  /* ---------- сравнение день / вечер ---------- */
-  $$('.cmp').forEach(function (c) { var inp = $('input', c); inp.addEventListener('input', function () { c.style.setProperty('--x', inp.value + '%'); }); });
 
   /* ---------- лента ---------- */
   $$('.reel-wrap').forEach(function (w) {
@@ -242,68 +240,67 @@
   }
 
   function stage() {
-    var st = $('.stage'), disp = $('#rip-d'), turb = $('#rip-t'), refl = $('.sc-reflect');
-    var hero = $('.hero-copy'), place = $('.place-copy'), ctl = $$('.scene-ctl button'), bar = $('.ctl-line b');
-    var rip = { s: 26 }, lastS = -1;
-    function setRip() { var v = Math.round(rip.s); if (v === lastS) return; lastS = v; disp.setAttribute('scale', v); refl.style.filter = v < 1 ? 'none' : 'url(#rip)'; }
-    var line = $('.rl-line');
+    var hs = $('.hero-stage'), st = $('.place-stage');
+    // герой: рябь постоянная, без смен при прокрутке
+    var hTurb = $('#rip-t');
+    if (fine && !reduce) {
+      var hp = 0, hOn = true, hn = 0;
+      ScrollTrigger.create({ trigger: hs, start: 'top bottom', end: 'bottom top', onToggle: function (s) { hOn = s.isActive; } });
+      gsap.ticker.add(function () {
+        if (!hOn || (++hn % 3)) return;
+        hp += .02;
+        hTurb.setAttribute('baseFrequency', (0.004 + Math.sin(hp * .7) * .0012).toFixed(5) + ' ' + (0.085 + Math.sin(hp) * .012).toFixed(5));
+      });
+    }
+    // «Место»: озеро -> ветер -> вода
+    var disp = $('#rip2-d'), refl = $('.sc-reflect', st);
+    var ctl = $$('.scene-ctl button', st), bar = $('.ctl-line b', st);
+    var rip = { s: 0 }, lastS = -1;
+    function setRip() { var v = Math.round(rip.s); if (v === lastS) return; lastS = v; disp.setAttribute('scale', v); refl.style.filter = v < 1 ? 'none' : 'url(#rip2)'; }
+    var line = $('.rl-line', st);
     gsap.set(line, { strokeDasharray: 1, strokeDashoffset: 1 });
-    gsap.set('.rl-flood', { scaleY: 0 });
-    gsap.set(['.rl-houses', '.rl-dim', '.rl-t'], { opacity: 0 });
-    var E = 'power2.inOut';
+    gsap.set($('.rl-flood', st), { scaleY: 0 });
+    gsap.set($$('.rl-houses, .rl-dim, .rl-t', st), { opacity: 0 });
+    gsap.set($$('.sc-glint', st), { opacity: 0 });
+    var E = 'power2.inOut', q = function (sel) { return $$(sel, st); };
     var tl = gsap.timeline({ defaults: { ease: E }, scrollTrigger: { trigger: st, start: 'top top', end: 'bottom bottom', scrub: .7, onUpdate: function (self) {
-      var p = self.progress, s = p < .17 ? 'hero' : p < .47 ? 'lake' : p < .77 ? 'wind' : 'flood';
+      var p = self.progress, s = p < .36 ? 'lake' : p < .68 ? 'wind' : 'flood';
       if (st.dataset.state !== s) { st.dataset.state = s; ctl.forEach(function (b) { b.classList.toggle('on', b.dataset.go === s); b.setAttribute('aria-pressed', String(b.dataset.go === s)); }); }
       bar.style.setProperty('--p', p.toFixed(3));
     } } });
-    // 0 - .12 герой живёт; .12 - .28 рябь стихает до зеркала
-    tl.to(hero, { autoAlpha: 0, y: -40, duration: .1 }, .1)
-      .to(rip, { s: 0, duration: .18, onUpdate: setRip }, .1)
-      .to('.sc-glint', { opacity: 0, duration: .12 }, .12)
-      .to(refl, { opacity: 1, duration: .12 }, .12)
-      .fromTo(place, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: .1 }, .19)
-      .to('.sc-rings', { opacity: .8, duration: .08 }, .22)
+    // озеро: зеркальная гладь, круги на воде
+    tl.to(q('.sc-rings'), { opacity: .8, duration: .1 }, .04)
       // ветер
-      .to('.sc-rings', { opacity: 0, duration: .06 }, .44)
-      .to(rip, { s: 54, duration: .14, onUpdate: setRip }, .46)
-      .to('.sc-glint.g1', { opacity: .7, duration: .1 }, .46)
-      .to('.sc-glint.g2', { opacity: .45, duration: .1 }, .46)
-      .to('.sc-wind', { opacity: .9, duration: .1 }, .46)
-      .fromTo('.sc-rose', { opacity: 0, rotate: -60, scale: .8 }, { opacity: 1, rotate: 0, scale: 1, duration: .1 }, .48)
+      .to(q('.sc-rings'), { opacity: 0, duration: .06 }, .33)
+      .to(rip, { s: 54, duration: .14, onUpdate: setRip }, .35)
+      .to(q('.sc-glint.g1'), { opacity: .7, duration: .1 }, .35)
+      .to(q('.sc-glint.g2'), { opacity: .45, duration: .1 }, .35)
+      .to(q('.sc-wind'), { opacity: .9, duration: .1 }, .35)
+      .fromTo(q('.sc-rose'), { opacity: 0, rotate: -60, scale: .8 }, { opacity: 1, rotate: 0, scale: 1, duration: .1 }, .37)
       // вода: разрез рельефа
-      .to('.sc-wind', { opacity: 0, duration: .07 }, .72)
-      .to('.sc-rose', { opacity: 0, duration: .06 }, .72)
-      .to(rip, { s: 0, duration: .09, onUpdate: setRip }, .72)
-      .to('.sc-glint', { opacity: 0, duration: .07 }, .72)
-      .to('.sc-relief', { opacity: 1, duration: .07 }, .76)
-      .to(line, { strokeDashoffset: 0, duration: .08, ease: 'none' }, .78)
-      .to('.rl-houses', { opacity: 1, duration: .05 }, .8)
-      .to('.rl-flood', { scaleY: 1, duration: .08, ease: 'power1.out' }, .82)
-      .to(['.rl-dim', '.rl-t'], { opacity: 1, duration: .04, stagger: .01 }, .86)
-      .to({}, { duration: .08 }, .92);
+      .to(q('.sc-wind'), { opacity: 0, duration: .07 }, .66)
+      .to(q('.sc-rose'), { opacity: 0, duration: .06 }, .66)
+      .to(rip, { s: 0, duration: .09, onUpdate: setRip }, .66)
+      .to(q('.sc-glint'), { opacity: 0, duration: .07 }, .66)
+      .to(q('.sc-relief'), { opacity: 1, duration: .07 }, .7)
+      .to(line, { strokeDashoffset: 0, duration: .08, ease: 'none' }, .72)
+      .to(q('.rl-houses'), { opacity: 1, duration: .05 }, .75)
+      .to(q('.rl-flood'), { scaleY: 1, duration: .08, ease: 'power1.out' }, .77)
+      .to(q('.rl-dim, .rl-t'), { opacity: 1, duration: .04, stagger: .01 }, .82)
+      .to({}, { duration: .1 }, .9);
     setRip();
-    // живая рябь: медленно «дышит» частота шума (только там, где есть запас мощности)
-    if (fine && !reduce) {
-      var ph = 0, on = true, n = 0;
-      ScrollTrigger.create({ trigger: st, start: 'top bottom', end: 'bottom top', onToggle: function (s) { on = s.isActive; } });
-      gsap.ticker.add(function () {
-        if (!on || lastS < 1 || (++n % 3)) return;
-        ph += .02;
-        turb.setAttribute('baseFrequency', (0.004 + Math.sin(ph * .7) * .0012).toFixed(5) + ' ' + (0.085 + Math.sin(ph) * .012).toFixed(5));
-      });
-    }
     // кнопки сцены
-    var pos = { lake: .33, wind: .615, flood: .92 };
+    var pos = { lake: .1, wind: .52, flood: .9 };
     ctl.forEach(function (b) { b.addEventListener('click', function () {
       var y = st.offsetTop + (st.offsetHeight - window.innerHeight) * pos[b.dataset.go];
       if (lenis) lenis.scrollTo(y, { duration: 1.6 }); else window.scrollTo({ top: y, behavior: 'smooth' });
     }); });
     // вход героя
     if (!reduce) {
-      var h1 = $('.h1', hero);
+      var hero = $('.hero-copy'), h1 = $('.h1', hero);
       var intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      intro.from('.sc-above .sc-drift', { scale: 1.06, duration: 2.2, ease: 'power2.out' }, 0)
-        .from('.sc-water', { opacity: 0, duration: 1.4 }, .2)
+      intro.from($('.sc-above .sc-drift', hs), { scale: 1.06, duration: 2.2, ease: 'power2.out' }, 0)
+        .from($('.sc-water', hs), { opacity: 0, duration: 1.4 }, .2)
         .from('.hero-copy .kicker', { opacity: 0, y: 16, duration: .8 }, .3);
       if (window.SplitText && doc.fonts) {
         gsap.set(h1, { opacity: 0 });
@@ -318,7 +315,7 @@
   }
 
   function reveals() {
-    if (reduce) { $('.incl-draw').classList.add('drawn'); return; }
+    if (reduce) { $('.incl-draw').classList.add('drawn'); $$('.scheme').forEach(function (f) { f.classList.add('drawn'); }); return; }
     var ease = 'power3.out';
     $$('.sec-head').forEach(function (h) {
       gsap.to(h.children, { opacity: 1, y: 0, duration: 1, stagger: .09, ease: ease, scrollTrigger: { trigger: h, start: 'top 84%' } });
@@ -328,21 +325,18 @@
     });
     ScrollTrigger.batch('.rv', { start: 'top 88%', onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: 1, stagger: .09, ease: ease }); } });
     ScrollTrigger.batch('.pt:not(.rv), .acc details, .cont-c, .pk-left, .pk-right', { start: 'top 90%', onEnter: function (els) { gsap.from(els, { opacity: 0, y: 24, duration: .9, stagger: .09, ease: ease }); } });
-    // кадр проявляется из собственного отражения
+    // кадр открывается шторкой снизу вверх, без размытия
     $$('.mirror-in').forEach(function (f) {
-      var img = $('img', f), rf = doc.createElement('div'), hz = doc.createElement('i');
-      rf.className = 'rf'; hz.className = 'hzl';
-      f.appendChild(rf); f.appendChild(hz);
-      gsap.set(img, { clipPath: 'inset(0 0 100% 0)' });
-      ScrollTrigger.create({ trigger: f, start: 'top 80%', once: true, onEnter: function () {
-        rf.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
-        var tl = gsap.timeline({ onComplete: function () { rf.remove(); hz.remove(); gsap.set(img, { clearProps: 'clipPath' }); } });
-        tl.fromTo(rf, { opacity: 0 }, { opacity: .9, duration: .5, ease: 'power1.out' })
-          .to(img, { clipPath: 'inset(0 0 0% 0)', duration: 1.3, ease: 'power3.inOut' }, .35)
-          .fromTo(hz, { top: '0%', opacity: 1 }, { top: '100%', duration: 1.3, ease: 'power3.inOut' }, .35)
-          .to(hz, { opacity: 0, duration: .2 }, 1.5)
-          .fromTo(img, { scale: 1.08 }, { scale: 1, duration: 1.8, ease: 'power2.out' }, .35);
+      var img = $('img', f);
+      gsap.set(img, { clipPath: 'inset(100% 0 0 0)' });
+      ScrollTrigger.create({ trigger: f, start: 'top 82%', once: true, onEnter: function () {
+        gsap.timeline({ onComplete: function () { gsap.set(img, { clearProps: 'clipPath' }); } })
+          .to(img, { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'power3.inOut' }, 0)
+          .fromTo(img, { scale: 1.08 }, { scale: 1, duration: 1.6, ease: 'power2.out' }, 0);
       } });
+    });
+    $$('.scheme').forEach(function (f) {
+      ScrollTrigger.create({ trigger: f, start: 'top 78%', once: true, onEnter: function () { f.classList.add('drawn'); } });
     });
     // чертёж
     ScrollTrigger.create({ trigger: '.incl-draw', start: 'top 75%', onEnter: function () { $('.incl-draw').classList.add('drawn'); startCycle(); }, onLeave: stopCycle, onEnterBack: startCycle, onLeaveBack: stopCycle });
@@ -365,14 +359,6 @@
     gsap.fromTo('.lead-bg img', { scale: 1.12 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.lead-sec', start: 'top bottom', end: 'bottom top', scrub: true } });
     gsap.from('.map-card', { y: 60, opacity: 0, duration: 1.1, ease: ease, scrollTrigger: { trigger: '.office-media', start: 'top 70%' } });
     gsap.from('.form', { y: 40, opacity: 0, duration: 1.1, ease: ease, scrollTrigger: { trigger: '.form', start: 'top 85%' } });
-    // сравнение: лёгкий заезд ручки
-    $$('.cmp').forEach(function (c) {
-      var o = { x: 78 }, inp = $('input', c);
-      ScrollTrigger.create({ trigger: c, start: 'top 70%', once: true, onEnter: function () {
-        gsap.to(o, { x: 50, duration: 1.6, ease: 'power3.inOut', onUpdate: function () { c.style.setProperty('--x', o.x + '%'); inp.value = o.x; } });
-      } });
-      c.style.setProperty('--x', '78%');
-    });
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });
   }
 

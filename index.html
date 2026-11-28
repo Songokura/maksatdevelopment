@@ -29,7 +29,7 @@
 <link rel="preload" as="image" fetchpriority="high" href="assets/photos/hero-shore.webp" imagesrcset="assets/photos/hero-shore-s.webp 760w, assets/photos/hero-shore-m.webp 1100w, assets/photos/hero-shore.webp 2000w, assets/photos/hero-shore-2500.webp 2500w" imagesizes="(max-width: 820px) 100vw, 70vw">
 <link rel="preload" href="assets/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/eb-garamond-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=20261126-18">
+<link rel="stylesheet" href="styles.css?v=20261128-1">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Organization","@id":"https://berekepark.kz/#org","name":"ТОО \"Maksat Development\"","alternateName":"Maksat Development","url":"https://berekepark.kz/","logo":"https://berekepark.kz/assets/logo/apple-touch-icon.png","foundingDate":"2015","image":"https://berekepark.kz/assets/og-image.jpg","address":{"@type":"PostalAddress","streetAddress":"ж.м. Юго-Запад-2, ул. Шалкииз жырау, строение 1","addressLocality":"Актобе","addressRegion":"Актюбинская область","addressCountry":"KZ"},"email":"berekepark@gmail.com","telephone":["+77777118080","+77777118070"],"sameAs":["https://www.instagram.com/berekepark_aktobe/","https://go.2gis.com/Lmsnm"]},
@@ -53,6 +53,10 @@
       <feTurbulence id="rip-t" type="fractalNoise" baseFrequency="0.004 0.085" numOctaves="2" seed="7" result="n"/>
       <feDisplacementMap id="rip-d" in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
+    <filter id="rip2" x="-4%" y="-4%" width="108%" height="108%" color-interpolation-filters="sRGB">
+      <feTurbulence id="rip2-t" type="fractalNoise" baseFrequency="0.004 0.085" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap id="rip2-d" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
   </defs>
 </svg>
 
@@ -60,10 +64,10 @@
   <div class="hdr-in">
     <a class="logo" href="#top" aria-label="Bereke Park"><img src="assets/logo/bereke-park-white.png" alt="Bereke Park" width="1200" height="198"></a>
     <nav class="nav" aria-label="Основное меню">
-      <a href="#mesto" data-i18n="nav.place">Место</a>
       <a href="#kvartiry" data-i18n="nav.apt">Квартиры и цены</a>
       <a href="#usloviya" data-i18n="nav.pay">Условия покупки</a>
       <a href="#dom" data-i18n="nav.home">Дом</a>
+      <a href="#mesto" data-i18n="nav.place">Место</a>
       <a href="#rayon" data-i18n="nav.area">Район</a>
       <a href="#zastroyshik" data-i18n="nav.dev">Застройщик</a>
       <a href="#kontakty" data-i18n="nav.cont">Контакты</a>
@@ -84,10 +88,10 @@
 
 <div class="mnav" id="mnav" hidden>
   <nav aria-label="Мобильное меню">
-    <a href="#mesto" data-i18n="nav.place">Место</a>
     <a href="#kvartiry" data-i18n="nav.apt">Квартиры и цены</a>
     <a href="#usloviya" data-i18n="nav.pay">Условия покупки</a>
     <a href="#dom" data-i18n="nav.home">Дом</a>
+    <a href="#mesto" data-i18n="nav.place">Место</a>
     <a href="#rayon" data-i18n="nav.area">Район</a>
     <a href="#zastroyshik" data-i18n="nav.dev">Застройщик</a>
     <a href="#kontakty" data-i18n="nav.cont">Контакты</a>
@@ -101,59 +105,20 @@
 
 <main>
 
-<!-- Сцена берега: герой и «Место» -->
-<section class="stage" id="top" data-state="hero">
-  <span class="anchor a-lake" id="mesto"></span>
-  <span class="anchor a-wind" id="veter"></span>
-  <span class="anchor a-flood" id="voda"></span>
+<!-- Герой: берег -->
+<section class="stage hero-stage" id="top" data-state="hero">
   <div class="stage-pin">
-
     <div class="scene" aria-hidden="true">
       <div class="sc-above"><div class="sc-drift"><img src="assets/photos/hero-shore.webp" srcset="assets/photos/hero-shore-s.webp 760w, assets/photos/hero-shore-m.webp 1100w, assets/photos/hero-shore.webp 2000w, assets/photos/hero-shore-2500.webp 2500w" sizes="(max-width: 820px) 100vw, 70vw" alt="" width="2000" height="1050" fetchpriority="high"></div></div>
       <div class="sc-birds"><svg viewBox="0 0 200 60"><path d="M10 30q8-10 16 0q8-10 16 0M70 14q6-8 12 0q6-8 12 0M120 40q5-6 10 0q5-6 10 0" fill="none" stroke="#0E1B3D" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-      <svg class="sc-wind" viewBox="0 0 1440 540" preserveAspectRatio="xMidYMid slice">
-        <defs><linearGradient id="wg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0"><stop offset="0" stop-color="#1F5E7A"/><stop offset=".55" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs>
-        <g fill="none" stroke="url(#wg)" stroke-width="1.3" stroke-linecap="round">
-          <path d="M-80 330C260 300 620 150 1520 60"/>
-          <path d="M-80 380C300 340 700 170 1520 120"/>
-          <path d="M-80 250C240 240 560 120 1520 20"/>
-          <path d="M-80 430C340 400 760 230 1520 170"/>
-          <path d="M-80 190C200 190 520 90 1520 -30"/>
-          <path d="M-80 470C380 450 800 280 1520 215"/>
-          <path d="M-80 300C280 270 600 130 1520 95"/>
-          <path d="M-80 510C420 500 860 330 1520 262"/>
-        </g>
-      </svg>
       <div class="sc-water">
         <div class="sc-reflect"><div class="sc-drift"><img src="assets/photos/hero-shore.webp" srcset="assets/photos/hero-shore-s.webp 760w, assets/photos/hero-shore-m.webp 1100w, assets/photos/hero-shore.webp 2000w, assets/photos/hero-shore-2500.webp 2500w" sizes="(max-width: 820px) 100vw, 70vw" alt="" width="2000" height="1050"></div></div>
         <div class="sc-tint"></div>
         <div class="sc-glint g1"><svg viewBox="0 0 1600 300" preserveAspectRatio="none"><g fill="none" stroke="#fff" stroke-linecap="round"><path stroke-width="1" d="M40 30h120M320 52h200M760 36h90M1040 60h220M1380 28h140M180 96h260M620 110h130M900 92h80M1180 120h300M80 170h340M560 190h180M860 160h260M1300 200h220M240 250h420M820 262h200M1160 244h360"/></g></svg></div>
         <div class="sc-glint g2"><svg viewBox="0 0 1600 300" preserveAspectRatio="none"><g fill="none" stroke="#fff" stroke-linecap="round"><path stroke-width="1" d="M200 20h80M520 44h160M900 24h120M1260 48h90M60 80h180M440 74h100M1000 104h220M1400 84h120M300 140h240M700 150h90M1100 168h280M120 220h200M480 232h300M940 214h160M1340 236h180"/></g></svg></div>
-        <svg class="sc-rings" viewBox="0 0 400 120"><g fill="none" stroke="#fff"><ellipse cx="200" cy="60" rx="30" ry="6"/><ellipse cx="200" cy="60" rx="70" ry="14"/><ellipse cx="200" cy="60" rx="120" ry="24"/><ellipse cx="200" cy="60" rx="180" ry="36"/></g></svg>
-        <svg class="sc-relief" viewBox="0 0 1440 400" preserveAspectRatio="xMaxYMin slice">
-          <defs><pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="9" stroke="#0E1B3D" stroke-opacity=".16" stroke-width="1"/></pattern></defs>
-          <rect class="rl-bg" width="1440" height="400" fill="#EFECE3"/>
-          <g class="rl-houses" fill="none" stroke="#0E1B3D" stroke-opacity=".55" stroke-width="1.2">
-            <path d="M90 250v-34l22-16 22 16v34M170 250v-52h44v52M240 250v-30l18-14 18 14v30M330 250v-64h52v64M410 250v-36l24-18 24 18v36M500 250v-46h38v46M570 250v-30l20-15 20 15v30M660 250v-58h46v58M730 250v-28l16-12 16 12v28"/>
-          </g>
-          <g class="rl-flood"><rect x="0" y="168" width="1000" height="84" fill="#1F5E7A" fill-opacity=".34"/><path d="M0 168h1000" stroke="#1F5E7A" stroke-width="1.5"/></g>
-          <path class="rl-ground-fill" d="M0 250H800C900 250 930 12 1060 6H1440V400H0Z" fill="#EFECE3"/>
-          <path d="M0 250H800C900 250 930 12 1060 6H1440V400H0Z" fill="url(#hatch)"/>
-          <path class="rl-line" d="M0 250H800C900 250 930 12 1060 6H1440" fill="none" stroke="#0E1B3D" stroke-width="1.6" pathLength="1"/>
-          <g class="rl-dim" stroke="#C6A56B" stroke-width="1.2" fill="none"><path d="M1004 168h150" stroke-dasharray="4 5"/><path d="M1130 12v150M1124 22l6-10 6 10M1124 152l6 10 6-10"/></g>
-          <text class="rl-t rl-years" x="856" y="156" text-anchor="end" data-i18n="place.years">2017 · 2024</text>
-          <text class="rl-t rl-bp" x="1180" y="92">Bereke Park</text>
-        </svg>
       </div>
       <div class="sc-haze"><i></i></div>
-      <svg class="sc-rose" viewBox="-16 -8 144 144">
-        <circle cx="60" cy="60" r="56" fill="#FBFAF6" fill-opacity=".86"/>
-        <g fill="none" stroke="#0E1B3D" stroke-opacity=".6"><circle cx="60" cy="60" r="44"/><circle cx="60" cy="60" r="30" stroke-dasharray="1 5"/><path d="M60 8v14M60 98v14M8 60h14M98 60h14"/></g>
-        <path d="M60 60 24 96" stroke="#C6A56B" stroke-width="1.6"/><path d="M60 60l30-30-7 22z" fill="#001C77"/><path d="M60 60l30-30-22 7z" fill="#C6A56B"/>
-        <text x="-14" y="132" class="rose-t" data-i18n="place.sw">ЮЗ</text>
-      </svg>
     </div>
-
     <div class="stage-copy hero-copy">
       <p class="kicker" data-i18n="hero.kicker">Актобе · Бизнес-класс · Квартиры от застройщика</p>
       <h1 class="h1" data-i18n="hero.h1">Квартиры бизнес-класса <em>у&nbsp;собственного озера</em> в&nbsp;Актобе</h1>
@@ -164,36 +129,8 @@
       </div>
       <a class="tlink hero-ig" href="https://www.instagram.com/berekepark_aktobe/" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#ic-ig"/></svg><span data-i18n="ui.ig">Ход строительства в Instagram</span> <span aria-hidden="true">→</span></a>
     </div>
-
-    <div class="stage-copy place-copy">
-      <p class="kicker" data-i18n="place.kicker">Место</p>
-      <h2 class="h2" data-i18n="place.h2">Расположение Bereke&nbsp;Park</h2>
-      <p class="lead" data-i18n="place.lead">Жилой район строится в экологически чистой части Актобе, вокруг собственного озера.</p>
-      <div class="states">
-        <article class="state" data-s="lake">
-          <h3 data-i18n="place.s1">Озеро</h3>
-          <div class="state-body"><p data-i18n="place.s1t">Собственное озеро в центре территории. В городе мало воды, поэтому жилых районов у водоёма в Актобе почти нет.</p></div>
-        </article>
-        <article class="state" data-s="wind">
-          <h3 data-i18n="place.s2">Ветер</h3>
-          <div class="state-body"><p data-i18n="place.s2t">Юго-западная роза ветров. Район продувается со стороны степи; в плотной городской застройке воздух застаивается, и до жилых кварталов доходит запах с заводов.</p></div>
-        </article>
-        <article class="state" data-s="flood">
-          <h3 data-i18n="place.s3">Вода</h3>
-          <div class="state-body"><p data-i18n="place.s3t">Незатапливаемая территория. В 2017 и 2024 годах часть новых районов города была затоплена.</p></div>
-        </article>
-      </div>
-    </div>
-
-    <div class="scene-ctl" role="group" aria-label="Сцена">
-      <button type="button" data-go="lake" data-i18n="place.s1">Озеро</button>
-      <button type="button" data-go="wind" data-i18n="place.s2">Ветер</button>
-      <button type="button" data-go="flood" data-i18n="place.s3">Вода</button>
-      <i class="ctl-line" aria-hidden="true"><b></b></i>
-    </div>
   </div>
 </section>
-
 <!-- Квартиры и цены -->
 <section class="sec apt" id="kvartiry">
   <div class="wrap">
@@ -241,7 +178,7 @@
         <div class="sheet">
           <div class="sheet-grid" aria-hidden="true"></div>
           <button class="sheet-view" type="button" aria-label="Открыть планировку">
-            <img id="pk-plan" src="assets/plans/plan-1.webp" alt="Планировка 3-комнатной квартиры" width="1400" height="1981" loading="lazy" decoding="async">
+            <img id="pk-plan" src="assets/plans/plan-11.webp" alt="Планировка 3-комнатной квартиры" width="1400" height="2034" loading="lazy" decoding="async">
           </button>
           <div class="sheet-stub" hidden>
             <svg viewBox="0 0 300 380" aria-hidden="true"><g fill="none" stroke="#001C77" stroke-width="1.4"><path d="M30 40h240v300H30z"/><path d="M30 170h110M140 40v90M140 170v60M140 270v70M200 170h70M200 170v40M200 250v90" stroke-opacity=".7"/><path d="M140 130a40 40 0 0 1 40 40M200 210a40 40 0 0 0-40 40M110 170a30 30 0 0 1 30 30" stroke-opacity=".4" stroke-dasharray="3 4"/><path d="M60 40h50M180 40h60M30 220v60M270 90v50" stroke="#C6A56B" stroke-width="3"/></g></svg>
@@ -281,18 +218,20 @@
           <path class="ln" pathLength="1" d="M268 110V430M312 110V430"/>
           <path class="ln thin" pathLength="1" d="M268 150l44-24M268 214l44-24M268 278l44-24M268 342l44-24M268 406l44-24"/>
           <path class="ln" pathLength="1" d="M110 430V494H470V430"/>
-          <path class="ln thin" pathLength="1" d="M170 430V494M230 430V494M350 430V494M410 430V494"/>
+          <path class="ln thin" pathLength="1" d="M170 430V494M230 430V494M290 430V494M350 430V494M410 430V494"/>
+          <path class="ln thin" pathLength="1" d="M118 494v-30h14v30M178 494v-30h14v30M238 494v-30h14v30M298 494v-30h14v30M358 494v-30h14v30M418 494v-30h14v30"/>
           <path class="ln thin" pathLength="1" d="M140 132h40v26h-40zM204 132h40v26h-40zM336 132h40v26h-40zM400 132h40v26h-40zM140 196h40v26h-40zM204 196h40v26h-40zM336 196h40v26h-40zM400 196h40v26h-40zM140 324h40v26h-40zM204 324h40v26h-40zM336 324h40v26h-40zM400 324h40v26h-40zM140 388h40v26h-40zM204 388h40v26h-40zM336 388h40v26h-40zM400 388h40v26h-40z"/>
           <path class="ln thin" pathLength="1" d="M140 260h40v26h-40zM204 260h40v26h-40zM336 260h40v26h-40zM400 260h40v26h-40z"/>
-          <path class="ln" pathLength="1" d="M530 430V352M700 430V362M516 348 716 364"/>
-          <path class="ln" pathLength="1" d="M556 430v-14q0-6 8-8l14-4 16-18h50l18 18 14 4q6 2 6 8v14"/>
-          <circle class="ln" pathLength="1" cx="584" cy="430" r="11"/><circle class="ln" pathLength="1" cx="656" cy="430" r="11"/>
-          <path class="ln thin" pathLength="1" d="M604 388h36l12 14h-60z"/>
+          <path class="ln" pathLength="1" d="M530 430V351M700 430V358M518 350 712 358.5"/>
+          <path class="ln" pathLength="1" d="M571 419h-21v-13q0-5 5-6l22-4 19-16h44l21 16 18 3q6 1 6 7v13h-16M647 419h-50"/>
+          <circle class="ln" pathLength="1" cx="584" cy="419" r="11"/><circle class="ln" pathLength="1" cx="660" cy="419" r="11"/>
+          <path class="ln thin" pathLength="1" d="M598 395l14-11h23l16 11z"/>
         </g>
         <g class="hl">
           <rect class="h-flat" x="312" y="238" width="158" height="64"/>
           <rect class="h-store" x="350" y="430" width="60" height="64"/>
-          <path class="h-park" d="M516 348 716 364V430H530V352Z"/>
+          <g class="st-in" fill="none" stroke="#C6A56B" stroke-width="1.4"><path d="M378 446h26M378 462h26M378 478h26"/><path d="M381 446v-8h9v8M392 462v-10h8v10M382 478v-7h12v7"/></g>
+          <path class="h-park" d="M530 351 700 358V430H530Z"/>
         </g>
         <g class="dims" fill="none" stroke="#C6A56B" stroke-width="1">
           <path d="M490 238v64M484 238h12M484 302h12"/>
@@ -345,7 +284,7 @@
     </header>
 
     <div class="row">
-      <figure class="ph mirror-in"><img src="assets/photos/plate-42.webp" alt="Фасад дома Bereke Park, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
+      <figure class="ph mirror-in"><img src="assets/photos/hero-39.webp" alt="Пятиэтажные дома Bereke Park, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
       <div class="row-text">
         <div class="pt">
           <svg class="pt-ic" viewBox="0 0 64 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 2h60v40H2z"/><path d="M27 2v40M37 2v40"/><path d="M27 14h10M27 22h10M27 30h10" stroke-opacity=".5"/></g><rect x="2" y="2" width="25" height="40" fill="#C6A56B" fill-opacity=".28"/></svg>
@@ -353,16 +292,40 @@
           <p data-i18n="home.p1t">На площадке один сосед, в подъезде 10 квартир, в доме - 20. У других застройщиков дома крупнее, и соседей в них больше.</p>
         </div>
         <div class="pt">
+          <h3 data-i18n="home.p6">Архитектура</h3>
+          <p data-i18n="home.p6t">Домов с таким оригинальным дизайном в Актобе нет.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row flip">
+      <figure class="ph scheme" aria-hidden="true">
+        <svg viewBox="0 0 800 600">
+          <rect width="800" height="600" fill="#F3F1EA"/>
+          <g fill="none" stroke="#0E1B3D" stroke-width="1.6" stroke-linejoin="round">
+            <path class="ln" pathLength="1" d="M70 70H730V530H70Z"/>
+            <path class="ln" pathLength="1" d="M350 70V330M450 70V330M350 330H450"/>
+            <path class="ln thin" pathLength="1" d="M362 96h76M362 126h76M362 156h76M362 186h76M362 216h76M362 246h76M362 276h76M362 306h76"/>
+          </g>
+          <g class="pz" fill="none" stroke="#C6A56B" stroke-width="2" stroke-dasharray="9 7">
+            <path d="M210 70V250M70 250H350M210 330V530M70 410H210M590 70V250M450 250H730M590 330V530M590 410H730M350 410V530M450 410V530"/>
+          </g>
+          <g class="cols" fill="#C6A56B">
+            <rect x="62" y="62" width="16" height="16"/><rect x="342" y="62" width="16" height="16"/><rect x="442" y="62" width="16" height="16"/><rect x="722" y="62" width="16" height="16"/>
+            <rect x="62" y="322" width="16" height="16"/><rect x="342" y="322" width="16" height="16"/><rect x="442" y="322" width="16" height="16"/><rect x="722" y="322" width="16" height="16"/>
+            <rect x="62" y="522" width="16" height="16"/><rect x="342" y="522" width="16" height="16"/><rect x="442" y="522" width="16" height="16"/><rect x="722" y="522" width="16" height="16"/>
+          </g>
+          <g class="net" fill="none" stroke="#1F5E7A" stroke-width="2" stroke-linecap="round">
+            <path class="ln" pathLength="1" d="M400 600V360M400 360H300V300M400 360H500V300"/>
+            <circle cx="300" cy="294" r="6"/><circle cx="500" cy="294" r="6"/>
+          </g>
+        </svg>
+      </figure>
+      <div class="row-text">
+        <div class="pt">
           <svg class="pt-ic" viewBox="0 0 64 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 42V4h56v38M4 16h56M4 29h56M22 4v38M42 4v38"/></g><g fill="#C6A56B"><circle cx="22" cy="16" r="2.4"/><circle cx="42" cy="16" r="2.4"/><circle cx="22" cy="29" r="2.4"/><circle cx="42" cy="29" r="2.4"/></g></svg>
           <h3 data-i18n="home.p2">Монолитный каркас</h3>
           <p data-i18n="home.p2t">Большинство домов в городе построено из кирпича, монолитных мало. Монолитный каркас более сейсмостоек.</p>
         </div>
-      </div>
-    </div>
-
-    <div class="row flip">
-      <figure class="ph mirror-in"><img src="assets/photos/card-45.webp" alt="Дома Bereke Park среди сосен, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
-      <div class="row-text">
         <div class="pt">
           <svg class="pt-ic" viewBox="0 0 64 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 2h60v40H2z"/><path d="M24 2v18M24 30v12M24 20h14M46 20h16M44 42V30" stroke="#C6A56B" stroke-dasharray="3 3"/></g></svg>
           <h3 data-i18n="home.p3">Свободная планировка</h3>
@@ -375,22 +338,16 @@
         </div>
       </div>
     </div>
-
     <div class="row">
-      <figure class="ph mirror-in"><img src="assets/photos/hero-39.webp" alt="Дома и двор Bereke Park, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
+      <figure class="ph mirror-in"><img src="assets/photos/plate-42.webp" alt="Фасад дома Bereke Park вблизи, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
       <div class="row-text">
         <div class="pt">
           <h3 data-i18n="home.p5">Материалы</h3>
           <p data-i18n="home.p5t">Строим из красивых и качественных материалов, которые в жилом строительстве города больше никто не применяет.</p>
         </div>
-        <div class="pt">
-          <h3 data-i18n="home.p6">Архитектура</h3>
-          <p data-i18n="home.p6t">Домов с таким оригинальным дизайном в Актобе нет.</p>
-        </div>
       </div>
     </div>
   </div>
-
   <div class="ceil">
     <div class="wrap ceil-in">
       <svg class="ceil-dim" viewBox="0 0 40 300" preserveAspectRatio="none" aria-hidden="true"><path d="M20 4v292M6 4h28M6 296h28" fill="none" stroke="#C6A56B" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>
@@ -399,6 +356,82 @@
   </div>
 </section>
 
+<!-- Место: озеро, ветер, вода -->
+<section class="stage place-stage" id="mesto" data-state="lake">
+  <span class="anchor a-wind" id="veter"></span>
+  <span class="anchor a-flood" id="voda"></span>
+  <div class="stage-pin">
+    <div class="scene" aria-hidden="true">
+      <div class="sc-above"><div class="sc-drift"><img src="assets/photos/plate-40.webp" alt="" width="2000" height="1500" loading="lazy" decoding="async"></div></div>
+      <svg class="sc-wind" viewBox="0 0 1440 540" preserveAspectRatio="xMidYMid slice">
+        <defs><linearGradient id="wg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0"><stop offset="0" stop-color="#1F5E7A"/><stop offset=".55" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs>
+        <g fill="none" stroke="url(#wg)" stroke-width="1.3" stroke-linecap="round">
+          <path d="M-80 330C260 300 620 150 1520 60"/>
+          <path d="M-80 380C300 340 700 170 1520 120"/>
+          <path d="M-80 250C240 240 560 120 1520 20"/>
+          <path d="M-80 430C340 400 760 230 1520 170"/>
+          <path d="M-80 190C200 190 520 90 1520 -30"/>
+          <path d="M-80 470C380 450 800 280 1520 215"/>
+          <path d="M-80 300C280 270 600 130 1520 95"/>
+          <path d="M-80 510C420 500 860 330 1520 262"/>
+        </g>
+      </svg>
+      <div class="sc-water">
+        <div class="sc-reflect" style="filter:url(#rip2)"><div class="sc-drift"><img src="assets/photos/plate-40.webp" alt="" width="2000" height="1500" loading="lazy" decoding="async"></div></div>
+        <div class="sc-tint"></div>
+        <div class="sc-glint g1"><svg viewBox="0 0 1600 300" preserveAspectRatio="none"><g fill="none" stroke="#fff" stroke-linecap="round"><path stroke-width="1" d="M40 30h120M320 52h200M760 36h90M1040 60h220M1380 28h140M180 96h260M620 110h130M900 92h80M1180 120h300M80 170h340M560 190h180M860 160h260M1300 200h220M240 250h420M820 262h200M1160 244h360"/></g></svg></div>
+        <div class="sc-glint g2"><svg viewBox="0 0 1600 300" preserveAspectRatio="none"><g fill="none" stroke="#fff" stroke-linecap="round"><path stroke-width="1" d="M200 20h80M520 44h160M900 24h120M1260 48h90M60 80h180M440 74h100M1000 104h220M1400 84h120M300 140h240M700 150h90M1100 168h280M120 220h200M480 232h300M940 214h160M1340 236h180"/></g></svg></div>
+        <svg class="sc-rings" viewBox="0 0 400 120"><g fill="none" stroke="#fff"><ellipse cx="200" cy="60" rx="30" ry="6"/><ellipse cx="200" cy="60" rx="70" ry="14"/><ellipse cx="200" cy="60" rx="120" ry="24"/><ellipse cx="200" cy="60" rx="180" ry="36"/></g></svg>
+        <svg class="sc-relief" viewBox="0 0 1440 400" preserveAspectRatio="xMaxYMin slice">
+          <defs><pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="9" stroke="#0E1B3D" stroke-opacity=".16" stroke-width="1"/></pattern></defs>
+          <rect class="rl-bg" width="1440" height="400" fill="#EFECE3"/>
+          <g class="rl-houses" fill="none" stroke="#0E1B3D" stroke-opacity=".55" stroke-width="1.2">
+            <path d="M90 250v-34l22-16 22 16v34M170 250v-52h44v52M240 250v-30l18-14 18 14v30M330 250v-64h52v64M410 250v-36l24-18 24 18v36M500 250v-46h38v46M570 250v-30l20-15 20 15v30M660 250v-58h46v58M730 250v-28l16-12 16 12v28"/>
+          </g>
+          <g class="rl-flood"><rect x="0" y="168" width="1000" height="84" fill="#1F5E7A" fill-opacity=".34"/><path d="M0 168h1000" stroke="#1F5E7A" stroke-width="1.5"/></g>
+          <path class="rl-ground-fill" d="M0 250H800C900 250 930 12 1060 6H1440V400H0Z" fill="#EFECE3"/>
+          <path d="M0 250H800C900 250 930 12 1060 6H1440V400H0Z" fill="url(#hatch)"/>
+          <path class="rl-line" d="M0 250H800C900 250 930 12 1060 6H1440" fill="none" stroke="#0E1B3D" stroke-width="1.6" pathLength="1"/>
+          <g class="rl-dim" stroke="#C6A56B" stroke-width="1.2" fill="none"><path d="M1004 168h150" stroke-dasharray="4 5"/><path d="M1130 12v150M1124 22l6-10 6 10M1124 152l6 10 6-10"/></g>
+          <text class="rl-t rl-years" x="856" y="156" text-anchor="end" data-i18n="place.years">2017 · 2024</text>
+          <text class="rl-t rl-bp" x="1180" y="92">Bereke Park</text>
+        </svg>
+      </div>
+      <div class="sc-haze"><i></i></div>
+      <svg class="sc-rose" viewBox="-16 -8 144 144">
+        <circle cx="60" cy="60" r="56" fill="#FBFAF6" fill-opacity=".86"/>
+        <g fill="none" stroke="#0E1B3D" stroke-opacity=".6"><circle cx="60" cy="60" r="44"/><circle cx="60" cy="60" r="30" stroke-dasharray="1 5"/><path d="M60 8v14M60 98v14M8 60h14M98 60h14"/></g>
+        <path d="M60 60 24 96" stroke="#C6A56B" stroke-width="1.6"/><path d="M60 60l30-30-7 22z" fill="#001C77"/><path d="M60 60l30-30-22 7z" fill="#C6A56B"/>
+        <text x="-14" y="132" class="rose-t" data-i18n="place.sw">ЮЗ</text>
+      </svg>
+    </div>
+    <div class="stage-copy place-copy">
+      <p class="kicker" data-i18n="place.kicker">Место</p>
+      <h2 class="h2" data-i18n="place.h2">Расположение Bereke&nbsp;Park</h2>
+      <p class="lead" data-i18n="place.lead">Жилой район строится в экологически чистой части Актобе, вокруг собственного озера.</p>
+      <div class="states">
+        <article class="state" data-s="lake">
+          <h3 data-i18n="place.s1">Озеро</h3>
+          <div class="state-body"><p data-i18n="place.s1t">Собственное озеро в центре территории. В городе мало воды, поэтому жилых районов у водоёма в Актобе почти нет.</p></div>
+        </article>
+        <article class="state" data-s="wind">
+          <h3 data-i18n="place.s2">Ветер</h3>
+          <div class="state-body"><p data-i18n="place.s2t">Юго-западная роза ветров. Район продувается со стороны степи; в плотной городской застройке воздух застаивается, и до жилых кварталов доходит запах с заводов.</p></div>
+        </article>
+        <article class="state" data-s="flood">
+          <h3 data-i18n="place.s3">Вода</h3>
+          <div class="state-body"><p data-i18n="place.s3t">Незатапливаемая территория. В 2017 и 2024 годах часть новых районов города была затоплена.</p></div>
+        </article>
+      </div>
+    </div>
+    <div class="scene-ctl" role="group" aria-label="Сцена">
+      <button type="button" data-go="lake" data-i18n="place.s1">Озеро</button>
+      <button type="button" data-go="wind" data-i18n="place.s2">Ветер</button>
+      <button type="button" data-go="flood" data-i18n="place.s3">Вода</button>
+      <i class="ctl-line" aria-hidden="true"><b></b></i>
+    </div>
+  </div>
+</section>
 <div class="mq" aria-hidden="true">
   <div class="mq-track">
     <span>Green City</span><span class="o">Smart City</span><span>Bereke Park</span><span class="o">Green City</span><span>Smart City</span><span class="o">Bereke Park</span>
@@ -417,16 +450,17 @@
   </div>
 
   <div class="reel-wrap">
+    <div class="reel-box">
     <div class="reel" tabindex="0">
-      <figure class="reel-i w"><img src="assets/photos/plate-25.webp" alt="Двор и улица Bereke Park, визуализация" width="2000" height="1200" loading="lazy" decoding="async"></figure>
+      <figure class="reel-i w"><img src="assets/photos/plate-43.webp" alt="Двор Bereke Park, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
       <figure class="reel-i s"><img src="assets/photos/card-50.webp" alt="Набережная озера, визуализация" width="1080" height="810" loading="lazy" decoding="async"></figure>
-      <figure class="reel-i"><img src="assets/photos/plate-40.webp" alt="Дома Bereke Park, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
+      <figure class="reel-i"><img src="assets/photos/plate-44.webp" alt="Детская площадка во дворе Bereke Park, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
       <figure class="reel-i w"><img src="assets/photos/plate-36.webp" alt="Озеро на территории Bereke Park" width="2000" height="1334" loading="lazy" decoding="async"></figure>
-      <figure class="reel-i"><img src="assets/photos/plate-43.webp" alt="Двор Bereke Park, визуализация" width="2000" height="1500" loading="lazy" decoding="async"></figure>
     </div>
-    <div class="reel-nav wrap">
       <button type="button" class="rbtn prev" aria-label="Назад"><svg width="20" height="20" style="transform:scaleX(-1)" aria-hidden="true" focusable="false"><use href="#ic-arr"/></svg></button>
       <button type="button" class="rbtn next" aria-label="Вперёд"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#ic-arr"/></svg></button>
+    </div>
+    <div class="reel-nav wrap">
       <a class="btn btn-line" href="https://www.instagram.com/berekepark_aktobe/" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#ic-ig"/></svg><span data-i18n="area.btn">Больше видов района в Instagram</span></a>
       <span class="reel-nick">@berekepark_aktobe</span>
     </div>
@@ -444,12 +478,7 @@
         <p data-i18n="area.p2t">Весь район строится в одном классе, поэтому складывается круг соседей со схожим образом жизни и требованиями к комфорту.</p>
       </div>
     </div>
-    <div class="cmp" style="--x:50%">
-      <img src="assets/photos/plate-44.webp" alt="Двор Bereke Park днём, визуализация" width="2000" height="1500" loading="lazy" decoding="async">
-      <img class="cmp-top" src="assets/photos/plate-48.webp" alt="Тот же двор вечером, визуализация" width="2000" height="1500" loading="lazy" decoding="async">
-      <i class="cmp-h" aria-hidden="true"><b><svg width="22" height="22" viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></b></i>
-      <input type="range" min="0" max="100" value="50" aria-label="День и вечер">
-    </div>
+    <figure class="ph mirror-in area-ph"><img src="assets/photos/plate-25.webp" alt="Улица Bereke Park среди сосен, визуализация" width="2000" height="1200" loading="lazy" decoding="async"></figure>
   </div>
 </section>
 
@@ -599,13 +628,13 @@
 
 <dialog class="lbx" id="lbx" aria-label="Планировка">
   <button class="lbx-x" type="button" aria-label="Закрыть">×</button>
-  <img src="assets/plans/plan-1.webp" alt="" loading="lazy" decoding="async">
+  <img src="assets/plans/plan-11.webp" alt="" loading="lazy" decoding="async">
 </dialog>
 
 <script src="assets/vendor/gsap.min.js" defer></script>
 <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="assets/vendor/SplitText.min.js" defer></script>
 <script src="assets/vendor/lenis.min.js" defer></script>
-<script src="script.js?v=20261126-18" defer></script>
+<script src="script.js?v=20261128-1" defer></script>
 </body>
 </html>
